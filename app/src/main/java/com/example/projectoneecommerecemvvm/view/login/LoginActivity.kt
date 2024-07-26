@@ -13,6 +13,7 @@ import com.example.projectoneecommerecemvvm.R
 import com.example.projectoneecommerecemvvm.databinding.ActivityLoginBinding
 import com.example.projectoneecommerecemvvm.model.data.UserLogin
 import com.example.projectoneecommerecemvvm.model.data.UserRegisterInfo
+import com.example.projectoneecommerecemvvm.view.dashboard.DashBoardActivity
 import com.example.projectoneecommerecemvvm.viewmodel.LoginViewModel
 import com.example.projectoneecommerecemvvm.viewmodel.RegisterViewModel
 import com.google.android.material.snackbar.Snackbar
@@ -43,11 +44,12 @@ class LoginActivity : AppCompatActivity() {
         }
         viewModel.loginResponseResult.observe(this) {
             viewModel.loginResponseResult.observe(this) {
-                AlertDialog.Builder(this@LoginActivity)
-                    .setTitle("Successfull!!!!")
-                    .setMessage("Logged in Successfully")
-                    .create()
-                    .show()
+                startActivity(Intent(this,DashBoardActivity::class.java))
+//                AlertDialog.Builder(this@LoginActivity)
+//                    .setTitle("Successfull!!!!")
+//                    .setMessage("Logged in Successfully")
+//                    .create()
+//                    .show()
             }
         }
     }

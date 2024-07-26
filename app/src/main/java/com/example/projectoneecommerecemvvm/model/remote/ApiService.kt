@@ -5,6 +5,7 @@ import com.example.projectoneecommerecemvvm.model.data.GetRegistrationResponse
 import com.example.projectoneecommerecemvvm.model.data.User
 import com.example.projectoneecommerecemvvm.model.data.UserLogin
 import com.example.projectoneecommerecemvvm.model.data.UserRegisterInfo
+import com.example.projectoneecommerecemvvm.model.data.dashboard.GetDashBoardResponse
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -27,6 +28,8 @@ interface ApiService {
     fun userRegister(
         @Body userRegisterInfo:UserRegisterInfo
     ):Call<GetRegistrationResponse>
+    @GET("Category")
+    fun getCategories(): Call<GetDashBoardResponse>
 
     companion object {
         private lateinit var apiService: ApiService
