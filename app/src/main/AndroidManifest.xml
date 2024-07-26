@@ -15,6 +15,9 @@
         android:theme="@style/Theme.ProjectOneEcommereceMVVM"
         tools:targetApi="31">
         <activity
+            android:name=".view.smartphone.SmartPhoneActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.dashboard.DashBoardActivity"
             android:exported="false" />
         <activity

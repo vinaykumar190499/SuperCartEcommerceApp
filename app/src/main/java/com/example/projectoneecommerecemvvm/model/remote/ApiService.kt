@@ -6,6 +6,8 @@ import com.example.projectoneecommerecemvvm.model.data.User
 import com.example.projectoneecommerecemvvm.model.data.UserLogin
 import com.example.projectoneecommerecemvvm.model.data.UserRegisterInfo
 import com.example.projectoneecommerecemvvm.model.data.dashboard.GetDashBoardResponse
+import com.example.projectoneecommerecemvvm.model.data.smartPhone.GetSmartPhoneResponse
+import com.example.projectoneecommerecemvvm.model.data.subcategory.GetSubCategoryResponse
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -30,6 +32,16 @@ interface ApiService {
     ):Call<GetRegistrationResponse>
     @GET("Category")
     fun getCategories(): Call<GetDashBoardResponse>
+
+    @GET("SubCategory")
+    fun getPhoneSubCategories(
+        @Query("category_id") id:Int
+    ): Call<GetSubCategoryResponse>
+
+    @GET("SubCategory/products/{sub_category_id}")
+    fun getSmartPhones(
+        @Path("sub_category_id") subCategoryId:Int
+    ):Call<GetSmartPhoneResponse>
 
     companion object {
         private lateinit var apiService: ApiService

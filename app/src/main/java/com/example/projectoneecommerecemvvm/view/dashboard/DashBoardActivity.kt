@@ -1,5 +1,6 @@
 package com.example.projectoneecommerecemvvm.view.dashboard
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -13,6 +14,8 @@ import com.example.projectoneecommerecemvvm.databinding.ActivityDashBoardBinding
 import com.example.projectoneecommerecemvvm.model.Repository
 import com.example.projectoneecommerecemvvm.model.remote.ApiService
 import com.example.projectoneecommerecemvvm.model.remote.RemoteRepository
+import com.example.projectoneecommerecemvvm.utils.Utils
+import com.example.projectoneecommerecemvvm.view.smartphone.SmartPhoneActivity
 import com.example.projectoneecommerecemvvm.viewmodel.dashboard.DashBoardVMFactory
 import com.example.projectoneecommerecemvvm.viewmodel.dashboard.DashBoardViewModel
 
@@ -52,7 +55,31 @@ class DashBoardActivity : AppCompatActivity() {
                 is ApiResource.Success -> {
                     with(binding){
                         dashboardRecyclerView.layoutManager = GridLayoutManager(this@DashBoardActivity, 2)
-                        binding.dashboardRecyclerView.adapter = DashBoardAdapter(it.result.categories){ Category ->
+                        binding.dashboardRecyclerView.adapter = DashBoardAdapter(it.result.categories){ category ->
+                            lateinit var subCategoryIntent : Intent
+                            when(category.category_name){
+                                "Smart Phones" ->{
+                                    subCategoryIntent=Intent(this@DashBoardActivity,SmartPhoneActivity::class.java)
+                                    subCategoryIntent.putExtra(Utils.DASHBOARD_CATEGORY,category)
+                                    startActivity(subCategoryIntent)
+                                }
+                                "Laptops" ->{
+
+                                }
+                                "Women's Fashion" ->{
+
+                                }
+                                "Kids Fashion" ->{
+
+                                }
+                                "Grocery" ->{
+
+                                }
+                                "Beauty & Cosmetics" ->{
+
+                                }
+
+                            }
                         }
                     }
 

@@ -10,7 +10,7 @@ import com.example.projectoneecommerecemvvm.model.data.dashboard.GetDashBoardRes
 
 class DashBoardViewModel(private val repo:IRepository): ViewModel() {
 
-    private val _apiResource=repo.apiResource
+    private val _apiResource=repo.apiResourceForDashBoard
     val apiResource: LiveData<ApiResource<GetDashBoardResponse>> = _apiResource
     init {
         repo.getDashBoard()
