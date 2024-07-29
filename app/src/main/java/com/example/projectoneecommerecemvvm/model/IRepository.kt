@@ -17,6 +17,7 @@ interface IRepository {
     val apiResourceForSmartPhone: LiveData<ApiResource<GetSmartPhoneResponse>>
     val _apiResourceForSmartPhoneDetailedInfo : MutableLiveData<ApiResource<GetSmartPhoneDetailedInfoResponse>>
     val apiResourceForSmartPhoneDetailedInfo: LiveData<ApiResource<GetSmartPhoneDetailedInfoResponse>>
+
     fun getDashBoard()
     fun getSmartPhoneSubCategory(id:Int)
     fun getSmartPhones(id:Int)

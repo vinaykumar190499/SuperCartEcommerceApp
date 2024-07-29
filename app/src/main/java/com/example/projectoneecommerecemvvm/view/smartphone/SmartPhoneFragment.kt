@@ -67,12 +67,14 @@ class SmartPhoneFragment : Fragment() {
                 is ApiResource.Loading -> TODO()
                 is ApiResource.Success -> {
                     binding.recyclerViewSmartPhones.layoutManager = LinearLayoutManager(context)
-                    binding.recyclerViewSmartPhones.adapter = SmartPhonesListAdapter(it.result.products){
-                        product ->
-                        val detailedIntent = Intent(context,SmartPhoneDetailedInfoViewActivity::class.java)
-                        detailedIntent.putExtra(PRODUCT_INFO,product)
-                        startActivity(detailedIntent)
-                    }
+                    binding.recyclerViewSmartPhones.adapter =
+                        context?.let { it1 ->
+                            SmartPhonesListAdapter(it1,it.result.products){ product ->
+                                val detailedIntent = Intent(context,SmartPhoneDetailedInfoViewActivity::class.java)
+                                detailedIntent.putExtra(PRODUCT_INFO,product)
+                                startActivity(detailedIntent)
+                            }
+                        }
 
                 }
             }

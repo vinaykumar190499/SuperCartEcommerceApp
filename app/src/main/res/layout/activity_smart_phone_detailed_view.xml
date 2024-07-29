@@ -126,28 +126,57 @@
             app:layout_constraintStart_toStartOf="@id/guide10Vertical"
             android:id="@+id/txtPhonePricee"
             />
-        <Button
-            android:id="@+id/addIntoCart"
+        <androidx.appcompat.widget.AppCompatButton
+            android:visibility="visible"
+            android:id="@+id/btnAddIntoCart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/addToCart"
             android:fontFamily="@string/font_sans_serif"
             android:textSize="@dimen/_dimen_18_dp"
-            android:textColor="@color/white"
+            android:textColor="@color/liteOrange"
             android:layout_marginTop="@dimen/_dimen_30_dp"
             app:layout_constraintTop_toBottomOf="@id/phoneImg"
             app:layout_constraintEnd_toEndOf="@id/guide90Vertical"
             />
-        <Button
+        <LinearLayout
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/quantityLayout"
+            app:layout_constraintTop_toBottomOf="@id/phoneImg"
+            app:layout_constraintEnd_toEndOf="@id/guide90Vertical"
+            >
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnDecrease"
+                android:layout_width="@dimen/_dimen_30_dp"
+                android:layout_height="wrap_content"
+                android:text="-" />
+
+            <TextView
+                android:id="@+id/tvQuantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="1" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnIncrease"
+                android:layout_width="@dimen/_dimen_30_dp"
+                android:layout_height="wrap_content"
+                android:text="+" />
+        </LinearLayout>
+        <androidx.appcompat.widget.AppCompatButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/btnGotoCart"
             android:text="@string/goToCart"
             android:fontFamily="@string/font_sans_serif"
             android:textSize="@dimen/_dimen_18_dp"
-            android:textColor="@color/white"
+            android:textColor="@color/liteOrange"
             android:layout_marginTop="@dimen/_dimen_30_dp"
-            app:layout_constraintTop_toBottomOf="@id/addIntoCart"
+            app:layout_constraintTop_toBottomOf="@id/btnAddIntoCart"
             app:layout_constraintEnd_toEndOf="@id/guide90Vertical"
             />
         <TextView

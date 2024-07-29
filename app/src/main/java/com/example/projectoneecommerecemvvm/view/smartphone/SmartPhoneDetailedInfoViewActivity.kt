@@ -1,6 +1,8 @@
 package com.example.projectoneecommerecemvvm.view.smartphone
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -8,12 +10,14 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.projectoneecommerecemvvm.common.ApiResource
 import com.example.projectoneecommerecemvvm.databinding.ActivitySmartPhoneDetailedViewBinding
 import com.example.projectoneecommerecemvvm.model.Repository
+import com.example.projectoneecommerecemvvm.model.data.Cart
 import com.example.projectoneecommerecemvvm.model.data.smartPhone.Product
+import com.example.projectoneecommerecemvvm.model.local.AppDatabase
 import com.example.projectoneecommerecemvvm.model.remote.ApiService
 import com.example.projectoneecommerecemvvm.utils.Utils.PRODUCT_INFO
+import com.example.projectoneecommerecemvvm.view.cart.CartActivity
 import com.example.projectoneecommerecemvvm.viewmodel.smartphone.SmartPhoneDetailedInfoVMFactory
 import com.example.projectoneecommerecemvvm.viewmodel.smartphone.SmartPhoneDetailedInfoViewModel
-import com.example.projectoneecommerecemvvm.viewmodel.smartphone.SmartPhoneVMFactory
 import com.squareup.picasso.Picasso
 
 class SmartPhoneDetailedInfoViewActivity : AppCompatActivity() {
@@ -60,6 +64,35 @@ class SmartPhoneDetailedInfoViewActivity : AppCompatActivity() {
                        txtFrontCamera.text = product.specifications[7].specification
                        txtDisplay.text = product.specifications[9].specification
                        txtOperationSystem.text = product.specifications[2].specification
+                       val appDb = AppDatabase.getInstance(this@SmartPhoneDetailedInfoViewActivity)
+                       var quantity = appDb?.cartDao()?.getQuantityById(product.product_id)?:1
+                       tvQuantity.text=quantity.toString()
+                       btnAddIntoCart.setOnClickListener {
+                           btnAddIntoCart.visibility= View.GONE
+                           quantityLayout.visibility = View.VISIBLE
+                           quantity = tvQuantity.text.toString().toInt()
+                       }
+                       btnIncrease.setOnClickListener {
+                           quantity++
+                           tvQuantity.text = quantity.toString()
+                       }
+                       btnDecrease.setOnClickListener {
+                           quantity--
+                           tvQuantity.text = quantity.toString()
+                           if(quantity<=0){
+                               btnAddIntoCart.visibility= View.VISIBLE
+                               quantityLayout.visibility = View.GONE
+                           }
+                       }
+                       btnGotoCart.setOnClickListener {
+                           if(quantity>0){
+                               val productQuantityToCart = Cart(product.product_id,quantity,product.product_name,product.description,product.price.toDouble(),product.product_image_url)
+
+                               appDb?.cartDao()?.insert(productQuantityToCart)
+                               startActivity(Intent(this@SmartPhoneDetailedInfoViewActivity,CartActivity::class.java))
+                           }
+                       }
+
                        //recyclerViewUserReview.layoutManager = LinearLayoutManager(this@SmartPhoneDetailedViewActivity)
                    }
 
