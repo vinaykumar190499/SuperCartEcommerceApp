@@ -1,18 +1,16 @@
 package com.example.projectoneecommerecemvvm.model.data.smartPhone
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
-
-@Parcelize
-data class Product(
+data class ProductDetailedInfo(
     val average_rating: String,
     val category_id: String,
-    val category_name: String,
     val description: String,
+    val images: List<Image>,
+    val is_active: String,
     val price: String,
     val product_id: String,
     val product_image_url: String,
     val product_name: String,
-    val sub_category_id: String,
-    val subcategory_name: String
-):Parcelable
+    val reviews: List<Any>,
+    val specifications: List<Specification>,
+    val sub_category_id: String
+)

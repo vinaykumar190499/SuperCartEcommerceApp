@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.projectoneecommerecemvvm.common.ApiResource
 import com.example.projectoneecommerecemvvm.model.data.dashboard.GetDashBoardResponse
+import com.example.projectoneecommerecemvvm.model.data.smartPhone.GetSmartPhoneDetailedInfoResponse
 import com.example.projectoneecommerecemvvm.model.data.smartPhone.GetSmartPhoneResponse
 import com.example.projectoneecommerecemvvm.model.data.subcategory.GetSubCategoryResponse
 import com.example.projectoneecommerecemvvm.model.remote.ApiService
@@ -23,6 +24,8 @@ class Repository(val apiService: ApiService,
     override val apiResourceForSubCategory: LiveData<ApiResource<GetSubCategoryResponse>> = _apiResourceForSubCategory
     override val _apiResourceForSmartPhone= MutableLiveData<ApiResource<GetSmartPhoneResponse>>()
     override val apiResourceForSmartPhone: LiveData<ApiResource<GetSmartPhoneResponse>> = _apiResourceForSmartPhone
+    override val _apiResourceForSmartPhoneDetailedInfo = MutableLiveData<ApiResource<GetSmartPhoneDetailedInfoResponse>>()
+    override val apiResourceForSmartPhoneDetailedInfo: LiveData<ApiResource<GetSmartPhoneDetailedInfoResponse>> = _apiResourceForSmartPhoneDetailedInfo
 
     override fun getDashBoard() {
         val call: Call<GetDashBoardResponse> = apiService.getCategories()
@@ -100,6 +103,33 @@ class Repository(val apiService: ApiService,
 
             override fun onFailure(p0: Call<GetSmartPhoneResponse>, p1: Throwable) {
                 _apiResourceForSmartPhone.postValue(ApiResource.Error("\"something Went wrong.\""))
+            }
+
+        })
+    }
+
+    override fun getSmartPhoneDetailedInfo(id: Int) {
+        val call: Call<GetSmartPhoneDetailedInfoResponse> = apiService.getSmartPhonesDetailedInfo(id)
+        call.enqueue(object: Callback<GetSmartPhoneDetailedInfoResponse> {
+            override fun onResponse(
+                call: Call<GetSmartPhoneDetailedInfoResponse>,
+                response: Response<GetSmartPhoneDetailedInfoResponse>
+            ) {
+                if(!response.isSuccessful) {
+                    val error = response.errorBody()?.string() ?: "Unknown server error. Please retry."
+                    _apiResourceForSmartPhoneDetailedInfo.postValue(ApiResource.Error(error))
+                    return
+                }
+                val searchResponse = response.body()
+                if(searchResponse == null) {
+                    _apiResourceForSmartPhoneDetailedInfo.postValue(ApiResource.Error("\"Empty response from server.\""))
+                    return
+                }
+                _apiResourceForSmartPhoneDetailedInfo.postValue(ApiResource.Success(searchResponse))
+            }
+
+            override fun onFailure(p0: Call<GetSmartPhoneDetailedInfoResponse>, p1: Throwable) {
+                _apiResourceForSmartPhoneDetailedInfo.postValue(ApiResource.Error("\"something Went wrong.\""))
             }
 
         })

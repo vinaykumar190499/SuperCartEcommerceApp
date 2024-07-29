@@ -10,7 +10,7 @@ import com.squareup.picasso.Picasso
 
 class SmartPhonesListAdapter(
     val productsLst: List<Product>,
-//    val onSelectPhone: (SmartPhones) -> Unit,
+    val onSelectPhone: (Product) -> Unit,
 //    val onSelctAddToCart: (SmartPhones) -> Unit
 ): RecyclerView.Adapter<SmartPhonesListAdapter.SmartphonesViewHolder>() {
     private lateinit var binding: SmartphoneItemsBinding
@@ -37,12 +37,10 @@ class SmartPhonesListAdapter(
                 txtPhonePrice.text = pricetext
                 Picasso.get().load("${Constants.IMG_BASE_URL}${products.product_image_url}").into(smartphoneImg)
             }
-//            binding.smartphonesCard.setOnClickListener{
-//                onSelectPhone(smartPhones)
-//            }
+            binding.smartphonesCard.setOnClickListener{
+                onSelectPhone(products)
+            }
 //            binding.btnAddToCart.setOnClickListener{
-//                println("here ______________________________________________________________")
-//                println("call this shit")
 //                onSelctAddToCart(smartPhones)
 //            }
         }

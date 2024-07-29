@@ -1,5 +1,6 @@
 package com.example.projectoneecommerecemvvm.view.smartphone
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,8 +14,10 @@ import com.example.projectoneecommerecemvvm.R
 import com.example.projectoneecommerecemvvm.common.ApiResource
 import com.example.projectoneecommerecemvvm.databinding.FragmentSmartPhoneBinding
 import com.example.projectoneecommerecemvvm.model.Repository
+import com.example.projectoneecommerecemvvm.model.data.smartPhone.Product
 import com.example.projectoneecommerecemvvm.model.data.subcategory.Subcategory
 import com.example.projectoneecommerecemvvm.model.remote.ApiService
+import com.example.projectoneecommerecemvvm.utils.Utils.PRODUCT_INFO
 import com.example.projectoneecommerecemvvm.viewmodel.smartphone.SmartPhoneListVMFactory
 import com.example.projectoneecommerecemvvm.viewmodel.smartphone.SmartPhoneListViewModel
 import com.example.projectoneecommerecemvvm.viewmodel.smartphone.SmartPhonesListAdapter
@@ -27,7 +30,7 @@ class SmartPhoneFragment : Fragment() {
         val id = subCategory?.subcategory_id?.toInt().let{
             it
         }
-        SmartPhoneListVMFactory(Repository(ApiService.getInstance()),1)
+        SmartPhoneListVMFactory(Repository(ApiService.getInstance()),id!!)
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,7 +67,12 @@ class SmartPhoneFragment : Fragment() {
                 is ApiResource.Loading -> TODO()
                 is ApiResource.Success -> {
                     binding.recyclerViewSmartPhones.layoutManager = LinearLayoutManager(context)
-                    binding.recyclerViewSmartPhones.adapter = SmartPhonesListAdapter(it.result.products)
+                    binding.recyclerViewSmartPhones.adapter = SmartPhonesListAdapter(it.result.products){
+                        product ->
+                        val detailedIntent = Intent(context,SmartPhoneDetailedInfoViewActivity::class.java)
+                        detailedIntent.putExtra(PRODUCT_INFO,product)
+                        startActivity(detailedIntent)
+                    }
 
                 }
             }

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.projectoneecommerecemvvm.common.ApiResource
 import com.example.projectoneecommerecemvvm.model.data.dashboard.GetDashBoardResponse
+import com.example.projectoneecommerecemvvm.model.data.smartPhone.GetSmartPhoneDetailedInfoResponse
 import com.example.projectoneecommerecemvvm.model.data.smartPhone.GetSmartPhoneResponse
 import com.example.projectoneecommerecemvvm.model.data.subcategory.GetSubCategoryResponse
 
@@ -14,7 +15,10 @@ interface IRepository {
     val apiResourceForSubCategory: LiveData<ApiResource<GetSubCategoryResponse>>
     val _apiResourceForSmartPhone : MutableLiveData<ApiResource<GetSmartPhoneResponse>>
     val apiResourceForSmartPhone: LiveData<ApiResource<GetSmartPhoneResponse>>
+    val _apiResourceForSmartPhoneDetailedInfo : MutableLiveData<ApiResource<GetSmartPhoneDetailedInfoResponse>>
+    val apiResourceForSmartPhoneDetailedInfo: LiveData<ApiResource<GetSmartPhoneDetailedInfoResponse>>
     fun getDashBoard()
     fun getSmartPhoneSubCategory(id:Int)
     fun getSmartPhones(id:Int)
+    fun getSmartPhoneDetailedInfo(id:Int)
 }
